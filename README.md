@@ -16,7 +16,7 @@ command: `udevadm monitor -p -s power_supply` and wait for the battery to drain 
 * [libsystemd](https://github.com/systemd/systemd) (This project links dynamically against libsystemd which is licensed under LGPL-2.1-or-later.)
 
 ## Configuration
-The only configuration needed is to set the macros in `src/config.h` file to the following:
+The only configuration needed is to modify the macros in `src/config.h` to the following:
 * `AC`: set to the AC adapter you want listed in the `/sys/class/power_supply/` directory prefixed by `/power_supply/`.
 * `BAT`: set to the battery you want listed in the `/sys/class/power_supply/` directory prefixed by `/power_supply/`.
 * `NTF_MS`: the duration in milliseconds that the notification will stay in the screen.
