@@ -1,0 +1,12 @@
+[Unit]
+Description=Battery notification daemon.
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=battery_monitor
+Restart=no
+
+[Install]
+WantedBy=default.target
+
