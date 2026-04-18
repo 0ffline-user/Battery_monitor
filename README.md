@@ -42,9 +42,9 @@ make install
 ```
 Which will clone the repo, enter the created directory, build the project and then copy the binary to `/usr/local/bin/` with the name `battery_monitor`.
 
-Lastly to make it run at startup you can either launch it directly from the window manager or with the systemd service file: `battery_monitor.service`.
+Lastly to make it run at startup you can either launch it directly from the window manager or use the systemd service file: `misc/battery_monitor.service`.
 
-If you choose to use the systemd service file then you must copy it to the directory: `~/.config/systemd/user/` (create it if it doesn't exist) and then run:
+If you choose to use the systemd service file then you must first copy it to the directory: `~/.config/systemd/user/` (create it if it doesn't exist) and then run:
 ```sh
 systemctl --user daemon-reload
 systemctl --user enable --now battery_monitor
