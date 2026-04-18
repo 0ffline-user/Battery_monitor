@@ -1,5 +1,5 @@
 # A simple and lightweight battery notification daemon.
-This program uses netlink to listen for specific uevents that are generated either when the battery reaches a specific predefined level(s) or when the AC adapter is connected/disconnected.
+This program uses netlink to listen for specific uevents that are generated either when the battery reaches a specific predefined level or when the AC adapter comes online or goes offline.
 
 ## Requirements
 * Linux kernel version >= 3.7.
