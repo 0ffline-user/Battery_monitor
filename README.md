@@ -5,7 +5,7 @@ This program uses netlink to listen for specific uevents that are generated eith
 * Linux kernel version >= 3.7.
 * A systemd managed user session with the dbus session bus address path set always to: `/run/user/<uid>/bus` (Already standard on almost every modern linux distribution).
 * A notification daemon like mako,dunst,... to actually show the notification on the screen.
-* Must be run as normal user (non-root).
+* Must be run as a normal user (non-root).
 
 The program relies exclusively on the uevents being broadcasted with the property: `POWER_SUPPLY_CAPACITY_LEVEL` set 
 to `Low` or `Critical`. Unfortunately that happens on different levels sometimes and the only way I am aware of checking if they actually occur is to run the 
