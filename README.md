@@ -3,7 +3,7 @@ This program uses netlink to listen for specific uevents that are generated eith
 
 ## Requirements
 * Linux kernel version >= 3.7.
-* A systemd managed user session with the dbus session bus address path set always to: `/run/user/<uid>/bus` (Already standard on almost every modern linux distribution).
+* A systemd managed user session with the dbus session bus address path set always to: `/run/user/<uid>/bus` (already standard on almost every modern linux distribution).
 * A notification daemon like mako,dunst,... to actually show the notification on the screen.
 * Must be run as a normal user (non-root).
 
