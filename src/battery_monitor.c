@@ -103,7 +103,7 @@ static __u32 uncover_magic_mgroups(void)
 	iov.iov_base = buf;
 	iov.iov_len = 8192;
 
-	uint32_t groups = 1 << 1;
+	__u32 groups = 1 << 1;
 	ssize_t rec = recvmsg(nds, &msg, 0);
 	for (struct nlmsghdr* nlh = (struct nlmsghdr*)buf; NLMSG_OK(nlh, rec); nlh = NLMSG_NEXT(nlh, rec))
 	{
@@ -140,7 +140,7 @@ static __u32 uncover_magic_mgroups(void)
 	return groups;
 }
 
-static int notify_bat(int cr)
+static int notify_bat(char cr)
 {
 	sd_bus* bus = NULL;
        	if(sd_bus_open_user(&bus) < 0)
@@ -370,7 +370,7 @@ int main(void)
 		.msg_iovlen = 1
 	};
 		
-	int ac = 0, low = 0, crit = 0, sb = 0, sa = 0;
+	char ac = 0, low = 0, crit = 0, sb = 0, sa = 0, trunc = 0;
 	
 	int ac_fd = open("/sys/class" AC "/online", O_CLOEXEC | O_RDONLY, 0);
 	if(ac_fd != -1)
@@ -383,8 +383,7 @@ int main(void)
 		close(ac_fd);
 	}
 	
-	ssize_t rs;
-	int trunc = 0;
+	ssize_t rs = 0;
 	while(epoll_pwait(es, &r_ev, 1, -1, &omask) != -1)
 	{
 		while((rs = recvmsg(ns, &msg, 0)) != -1)
