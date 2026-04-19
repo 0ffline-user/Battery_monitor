@@ -268,6 +268,8 @@ int main(void)
 	}
 	close(inf);
 	
+
+	char low = 0, crit = 0;
 	int bls = open("/sys/class" BAT "/capacity", O_RDONLY | O_CLOEXEC, 0);
 	if(bls == -1)
 	{
@@ -285,7 +287,8 @@ int main(void)
 			{
 				if(lvl < 16)
 				{
-					notify_bat((lvl < 6 ? 1 : 0));
+					*(lvl < 6 ? &crit : &low) = !notify_bat((lvl < 6 ? 1 : 0));
+					
 				}
 			}
 		}
@@ -370,7 +373,7 @@ int main(void)
 		.msg_iovlen = 1
 	};
 		
-	char ac = 0, low = 0, crit = 0, sb = 0, sa = 0, trunc = 0;
+	char ac = 0, sb = 0, sa = 0, trunc = 0;
 	
 	int ac_fd = open("/sys/class" AC "/online", O_CLOEXEC | O_RDONLY, 0);
 	if(ac_fd != -1)
@@ -378,7 +381,10 @@ int main(void)
 		char cbr = 0;
 		if(read(ac_fd, &cbr, 1) == 1)
 		{
-			ac = cbr - '0';		
+			ac = cbr - '0';	
+			low = ac ? 0 : low;
+			crit = ac ? 0 : crit;
+
 		}
 		close(ac_fd);
 	}
