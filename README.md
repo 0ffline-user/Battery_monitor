@@ -56,3 +56,9 @@ To uninstall the program run:
 make uninstall
 ```
 Which will terminate the program if it is running and then delete the binary from `/usr/local/bin/`.
+
+If you chose to launch it with the service file then you must also run:
+```sh
+rm ~/.config/systemd/user/battery_monitor.service
+systemctl --user daemon-reload
+```
