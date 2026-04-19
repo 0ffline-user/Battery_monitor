@@ -267,7 +267,6 @@ int main(void)
 		}	
 	}
 	close(inf);
-	
 
 	char low = 0, crit = 0;
 	int bls = open("/sys/class" BAT "/capacity", O_RDONLY | O_CLOEXEC, 0);
@@ -384,7 +383,6 @@ int main(void)
 			ac = cbr - '0';	
 			low = ac ? 0 : low;
 			crit = ac ? 0 : crit;
-
 		}
 		close(ac_fd);
 	}
