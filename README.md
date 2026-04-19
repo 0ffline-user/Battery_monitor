@@ -49,3 +49,10 @@ If you choose to use the systemd service file then you must first copy it to the
 systemctl --user daemon-reload
 systemctl --user enable --now battery_monitor
 ```
+
+## Removal
+To uninstall the program run: 
+```sh
+make uninstall
+```
+Which will terminate the program if it is running and then delete the binary from `/usr/local/bin/`.
