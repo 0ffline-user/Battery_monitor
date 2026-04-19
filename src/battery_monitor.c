@@ -206,8 +206,8 @@ static int notify_bat(char cr)
 
 int main(void)
 {
-	clearenv();
 	prctl(PR_SET_NO_NEW_PRIVS, 1L, 0L, 0L, 0L);
+	clearenv();
 	
 	int dnfd = open("/dev/null", O_RDWR);
 	if(dnfd != -1)
