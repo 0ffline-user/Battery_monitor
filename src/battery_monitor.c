@@ -103,7 +103,6 @@ static __u32 uncover_magic_mgroups(void)
 	iov.iov_base = buf;
 	iov.iov_len = 8192;
 
-	__u32 groups = 1 << 1;
 	ssize_t rec = recvmsg(nds, &msg, 0);
 	for (struct nlmsghdr* nlh = (struct nlmsghdr*)buf; NLMSG_OK(nlh, rec); nlh = NLMSG_NEXT(nlh, rec))
 	{
@@ -129,15 +128,16 @@ static __u32 uncover_magic_mgroups(void)
 		{
 			if(attr->rta_type == NETLINK_DIAG_GROUPS)
 			{
-				groups = (*(__u32*)RTA_DATA(attr)) & ~((__u32)1);
-				break;
+				close(nds);
+				close(s);
+				return (*(__u32*)RTA_DATA(attr)) & ~((__u32)1);
 			}
 		}	
 	}
 	
 	close(nds);
 	close(s);
-	return groups;
+	return (1 << 1);
 }
 
 static
