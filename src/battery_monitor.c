@@ -140,7 +140,13 @@ static __u32 uncover_magic_mgroups(void)
 	return groups;
 }
 
-static int notify_bat(char cr)
+static
+#ifdef DEBUG
+int
+#else
+char
+#endif
+notify_bat(char cr)
 {
 	sd_bus* bus = NULL;
        	if(sd_bus_open_user(&bus) < 0)
