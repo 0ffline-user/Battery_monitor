@@ -118,7 +118,7 @@ static __u32 uncover_magic_mgroups(void)
 			return (1 << 1);
 		}
 		struct netlink_diag_msg* nmsg = (struct netlink_diag_msg*)NLMSG_DATA(nlh);
-		unsigned int rta_len = nlh->nlmsg_len - NLMSG_LENGTH(sizeof(*nmsg));
+		__u32 rta_len = nlh->nlmsg_len - NLMSG_LENGTH(sizeof(*nmsg));
 		if((nmsg->ndiag_family != AF_NETLINK) || (nmsg->ndiag_ino != s_st.st_ino))
 		{
 			close(nds);
@@ -129,7 +129,7 @@ static __u32 uncover_magic_mgroups(void)
 		{
 			if(attr->rta_type == NETLINK_DIAG_GROUPS)
 			{
-				groups = (*(__u32*)RTA_DATA(attr)) & ~((__u32)0x1);
+				groups = (*(__u32*)RTA_DATA(attr)) & ~((__u32)1);
 				break;
 			}
 		}	
