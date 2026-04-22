@@ -25,11 +25,11 @@
 	#define EC(l) ( 1 )	
 #endif
 
-static void sig_hand(int sig)
+__attribute__((cold)) static void sig_hand(int sig)
 {
 }
 
-static __u32 uncover_magic_mgroups(void)
+__attribute__((cold)) static __u32 uncover_magic_mgroups(void)
 {
 	int s = socket(AF_NETLINK, SOCK_RAW | SOCK_NONBLOCK | SOCK_CLOEXEC, NETLINK_KOBJECT_UEVENT);
 	if(s == -1)
@@ -140,29 +140,23 @@ static __u32 uncover_magic_mgroups(void)
 	return (1 << 1);
 }
 
-static
-#ifdef DEBUG
-int
-#else
-char
-#endif
-notify_bat(char cr)
+static char notify_bat(char cr)
 {
 	sd_bus* bus = NULL;
-       	if(sd_bus_open_user(&bus) < 0)
+       	if(__builtin_expect(sd_bus_open_user(&bus) < 0, 0))
 	{
 		return EC(__LINE__);
 	}
 
 	sd_bus_message* msg = NULL;
-	if(sd_bus_message_new_method_call(bus, &msg, "org.freedesktop.Notifications", 
-				"/org/freedesktop/Notifications", "org.freedesktop.Notifications", "Notify") < 0)
+	if(__builtin_expect(sd_bus_message_new_method_call(bus, &msg, "org.freedesktop.Notifications", 
+				"/org/freedesktop/Notifications", "org.freedesktop.Notifications", "Notify") < 0, 0))
 	{
 		sd_bus_close_unref(bus);
 		return EC(__LINE__);
 	}
 	
-	if(sd_bus_message_append(msg, "susss", "", 0, "", (cr ? "Critical battery level." : "Low battery level."), "") < 0)
+	if(__builtin_expect(sd_bus_message_append(msg, "susss", "", 0, "", (cr ? "Critical battery level." : "Low battery level."), "") < 0, 0))
 	{
 		sd_bus_message_unref(msg);	
 		sd_bus_close_unref(bus);
@@ -174,14 +168,14 @@ notify_bat(char cr)
 	
 	sd_bus_message_open_container(msg, 'a', "{sv}");
 	sd_bus_message_open_container(msg, 'e', "sv");
-	if(sd_bus_message_append(msg, "s", "urgency") < 0)
+	if(__builtin_expect(sd_bus_message_append(msg, "s", "urgency") < 0, 0))
 	{
 		sd_bus_message_unref(msg);	
 		sd_bus_close_unref(bus);
 		return EC(__LINE__);
 	}
 	sd_bus_message_open_container(msg, 'v', "y");
-	if(sd_bus_message_append(msg, "y", (uint8_t)2) < 0)
+	if(__builtin_expect(sd_bus_message_append(msg, "y", (uint8_t)2) < 0, 0))
 	{
 		sd_bus_message_unref(msg);	
 		sd_bus_close_unref(bus);
@@ -191,14 +185,14 @@ notify_bat(char cr)
 	sd_bus_message_close_container(msg);
 	sd_bus_message_close_container(msg);
 
-	if(sd_bus_message_append(msg, "i", NTF_MS) < 0)
+	if(__builtin_expect(sd_bus_message_append(msg, "i", NTF_MS) < 0, 0))
 	{
 		sd_bus_message_unref(msg);	
 		sd_bus_close_unref(bus);
 		return EC(__LINE__);
 	}
 	
-	if(sd_bus_call(bus, msg, 1000000, NULL, NULL) < 0)
+	if(__builtin_expect(sd_bus_call(bus, msg, 1000000, NULL, NULL) < 0, 0))
 	{
 		sd_bus_message_unref(msg);	
 		sd_bus_close_unref(bus);
@@ -398,7 +392,7 @@ int main(void)
 	{
 		while((rs = recvmsg(ns, &msg, 0)) != -1)
 		{
-			if(msg.msg_flags & MSG_TRUNC)
+			if(__builtin_expect(msg.msg_flags & MSG_TRUNC, 0))
 			{
 				trunc = 1;
 			}
