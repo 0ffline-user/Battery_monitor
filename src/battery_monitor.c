@@ -399,7 +399,7 @@ int main(void)
 			char* bcp = buf;
 			while(bcp < buf + rs)
 			{
-				if(strstr(bcp, "DEVPATH="))
+				if(!strncmp(bcp, "DEVPATH=", sizeof("DEVPATH=") - 1))
 				{
 					if(strstr(bcp, AC))
 					{
@@ -420,11 +420,12 @@ int main(void)
 			{
 				while(bcp < buf + rs)
 				{
-					if(!strncmp(bcp, "POWER_SUPPLY_ONLINE=", sizeof("POWER_SUPPLY_ONLINE=") - 1))
+					if(__builtin_expect(!strncmp(bcp, "POWER_SUPPLY_ONLINE=", sizeof("POWER_SUPPLY_ONLINE=") - 1), 0))
 					{
 						ac = *(bcp + sizeof("POWER_SUPPLY_ONLINE=") - 1) - '0';
 						low = ac ? 0 : low;
 						crit = ac ? 0 : crit;
+						break;
 					}
 					bcp += strlen(bcp) + 1;
 				}
@@ -433,15 +434,17 @@ int main(void)
 			{
 				while(bcp < buf + rs)
 				{	
-					if(!strncmp(bcp, "POWER_SUPPLY_CAPACITY_LEVEL=", sizeof("POWER_SUPPLY_CAPACITY_LEVEL=") - 1))
+					if(__builtin_expect(!strncmp(bcp, "POWER_SUPPLY_CAPACITY_LEVEL=", sizeof("POWER_SUPPLY_CAPACITY_LEVEL=") - 1), 0))
 					{
-						if(!strncmp(bcp + sizeof("POWER_SUPPLY_CAPACITY_LEVEL"), "Critical", sizeof("Critical") - 1) && !crit)	
-						{
-							crit = !notify_bat(1);
-						}
-						else if(!strncmp(bcp + sizeof("POWER_SUPPLY_CAPACITY_LEVEL"), "Low", sizeof("Low") - 1) && !low)
+						if(!strncmp(bcp + sizeof("POWER_SUPPLY_CAPACITY_LEVEL"), "Low", sizeof("Low") - 1) && !low)
 						{
 							low = !notify_bat(0);
+							break;
+						}
+						else if(!strncmp(bcp + sizeof("POWER_SUPPLY_CAPACITY_LEVEL"), "Critical", sizeof("Critical") - 1) && !crit)	
+						{
+							crit = !notify_bat(1);
+							break;
 						}
 					}
 					bcp += strlen(bcp) + 1;
