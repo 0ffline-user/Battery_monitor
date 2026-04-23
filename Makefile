@@ -11,7 +11,7 @@ INSTALL_DIR = /usr/local/bin/
 all: $(TARGET)
 
 install: $(TARGET)
-	sudo cp $(TARGET) $(INSTALL_DIR)$(TARGET)
+	sudo mv -f $(TARGET) $(INSTALL_DIR)
 
 uninstall:
 	kill -s SIGTERM $$(pgrep $(TARGET)) 2>/dev/null; true
