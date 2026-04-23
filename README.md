@@ -18,7 +18,7 @@ command: `udevadm monitor -p -s power_supply` and wait for the battery to drain 
 The only configuration needed is to modify the macros in `src/config.h` to the following:
 * `AC`: set to the AC adapter you want listed in the `/sys/class/power_supply/` directory prefixed by `/power_supply/`.
 * `BAT`: set to the battery you want listed in the `/sys/class/power_supply/` directory prefixed by `/power_supply/`.
-* `NTF_MS`: the duration in milliseconds that the notification will stay in the screen.
+* `NTF_MS`: the duration in milliseconds that the notification will stay on the screen.
 
 Example:
 ```sh
