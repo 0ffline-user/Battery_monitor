@@ -257,7 +257,7 @@ int main(void)
 	snprintf(db_addr_file, 64, "/run/user/%" PRIuMAX "/bus", (uintmax_t)cuid);
 	if(access(db_addr_file, F_OK) == -1)
 	{
-		while(read(inf, &iev, sizeof(struct inotify_event) + 64 + 1) != -1)
+		while(read(inf, iev, sizeof(struct inotify_event) + 64 + 1) != -1)
 		{
 			if((iev_p->wd == inf_w) && (iev_p->mask & IN_CREATE) && strstr(iev_p->name, "bus"))
 			{
