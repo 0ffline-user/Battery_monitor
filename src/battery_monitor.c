@@ -25,7 +25,7 @@
 	#define EC(l) ( 1 )	
 #endif
 
-__attribute__((cold)) static void sig_hand(int sig)
+__attribute__((cold)) static void sig_hand(int sig __attribute__((unused)))
 {
 }
 
