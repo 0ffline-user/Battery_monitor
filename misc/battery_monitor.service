@@ -6,6 +6,7 @@ After=default.target
 Type=simple
 ExecStart=battery_monitor
 Restart=no
+SuccessExitStatus=0
 
 [Install]
 WantedBy=default.target
