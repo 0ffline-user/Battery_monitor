@@ -14,7 +14,7 @@ install: $(TARGET)
 	sudo mv -f $(TARGET) $(INSTALL_DIR)
 
 uninstall:
-	kill -s SIGTERM $$(pgrep $(TARGET)) 2>/dev/null; true
+	kill -s SIGTERM $$(pgrep $(TARGET)); true
 	sudo rm -f $(INSTALL_DIR)$(TARGET)
 
 clean:
