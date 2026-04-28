@@ -12,7 +12,7 @@ command: `udevadm monitor -p -s power_supply` and wait for the battery to drain 
 (`<battery>` is to be replaced with the appropriate device in the `/sys/class/power_supply/` directory) and the property mentioned before set to `Low` or `Critical` (should happen somewhere in 4%-16%).
 
 ## Dependencies
-* [libsystemd](https://github.com/systemd/systemd) (The project links dynamically against libsystemd which is licensed under LGPL-2.1-or-later.)
+* [libsystemd](https://www.freedesktop.org/software/systemd/man/latest/libsystemd.html) (The project links dynamically against libsystemd which is licensed under LGPL-2.1-or-later.)
 
 ## Configuration
 The only configuration needed is to modify the macros in `src/config.h` to the following:
